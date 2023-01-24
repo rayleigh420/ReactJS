@@ -1,19 +1,17 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchAPI, getInfo } from "./redux/userSlice";
+import { fetchAPI, getInfo, getName, getUser } from "./redux/userSlice";
 import "./styles.css";
 
 export default function App() {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
-  const users = useSelector((state) => state.user.user);
+  const users = useSelector(getUser);
 
   useEffect(() => {
     dispatch(fetchAPI());
     setName(users.name);
   }, []);
-
-  // setName(users.name);
 
   const handleChangeName = (e) => {
     console.log(e.target.value);

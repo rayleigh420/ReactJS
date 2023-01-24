@@ -24,6 +24,9 @@ const user = createSlice({
       .addCase(fetchAPI.fulfilled, (state, action) => {
         state.user = action.payload;
         state.status = "done";
+      })
+      .addCase(fetchAPI.rejected, (state, action) => {
+        state.status = action.payload;
       });
   }
 });
@@ -31,11 +34,19 @@ const user = createSlice({
 export const fetchAPI = createAsyncThunk(
   "users/fetchAPI",
   async (params, thunkAPI) => {
-    let result = await userAPI.request();
-    return result;
+    try {
+      let result = await userAPI.request();
+      return result;
+    } catch (e) {
+      return e.message;
+    }
   }
 );
 
+export const getName = (state) => state.user.name;
+export const getUser = (state) => state.user.user;
+
 const { reducer, actions } = user;
+
 export const { getInfo } = actions;
 export default reducer;
