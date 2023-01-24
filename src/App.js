@@ -6,13 +6,14 @@ import "./styles.css";
 export default function App() {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
+  const users = useSelector((state) => state.user.user);
 
   useEffect(() => {
     dispatch(fetchAPI());
+    setName(users.name);
   }, []);
 
-  const users = useSelector((state) => state.user.user);
-  setName(users.name);
+  // setName(users.name);
 
   const handleChangeName = (e) => {
     console.log(e.target.value);
